@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { getRepositoryNames } from '../actions';
 
-const Home = ({ initialText, changeText }) => (
-  <div>
-    <p>{initialText}</p>
-    <button onClick={changeText}>change text!</button>
-  </div>
-);
+const Home = ({ repositoryNames, getRepositoryNames }) => {
+  useEffect(() => {
+    if (!repositoryNames) {
+      getRepositoryNames();
+    }
+  }, []);
 
-const mapStateToProps = ({ initialText }) => ({
-  initialText,
+  return  (
+    <ul>
+      {repositoryNames && repositoryNames.map((repo) => (
+        <li key={repo.id}>
+          {repo.name}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const mapStateToProps = ({ repositoryNames }) => ({
+  repositoryNames,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeText: () => dispatch({ type: 'CHANGE_TEXT' }),
+  getRepositoryNames: () => dispatch(getRepositoryNames()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
