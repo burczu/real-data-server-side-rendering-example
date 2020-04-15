@@ -1,7 +1,7 @@
 function reducer(state, action) {
   switch (action.type) {
-    case 'CHANGE_TEXT':
-      return { ...state, initialText: 'changed in the browser!' };
+    case 'SET_REPOSITORY_NAMES':
+      return { ...state, repositoryNames: action.payload };
     default:
       return { ...state };
   }
